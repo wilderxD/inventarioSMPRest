@@ -1,0 +1,51 @@
+package com.grupoUTP.inventarioSMP.service;
+
+import com.grupoUTP.inventarioSMP.entity.Entrada;
+import com.grupoUTP.inventarioSMP.entity.Equipo;
+import com.grupoUTP.inventarioSMP.repository.IEntradasDAO;
+import com.grupoUTP.inventarioSMP.repository.IEquipoDAO;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class EntradaServiceImpl implements IEntradaService{
+        
+        private final IEntradasDAO entradaDAO;
+        
+        private final IEquipoDAO equipoDAO;
+
+    @Override
+    public List<Entrada> findAll() {
+        return entradaDAO.findAll();
+    }
+
+    @Override
+    public Page<Entrada> findAll(Pageable pageable) {
+        return entradaDAO.findAll(pageable);
+    }
+
+    @Override
+    public Entrada findById(Long id) {
+        return entradaDAO.findById(id).orElse(null);
+    }
+
+    @Override
+    public Entrada save(Entrada entrada) {
+        return entradaDAO.save(entrada);
+    }
+
+    @Override
+    public void delete(Long id) {
+        entradaDAO.deleteById(id);
+    }
+
+    @Override
+    public List<Equipo> findAllEquipos() {
+        return equipoDAO.findAll();
+    }
+    
+}
