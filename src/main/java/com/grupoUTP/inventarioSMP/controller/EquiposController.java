@@ -156,7 +156,7 @@ public class EquiposController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
-        response.put("rmensaje", "El equipo ha sido eliminado con exito.!");
+        response.put("mensaje", "El equipo ha sido eliminado con exito.!");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
     
