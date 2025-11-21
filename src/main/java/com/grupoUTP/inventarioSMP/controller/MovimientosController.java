@@ -219,9 +219,52 @@ public class MovimientosController {
         
         Map<String, Object> response = new HashMap<>();
         
-        if(){
+        if(result.hasErrors()){
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
             
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
+        
+        if(salidaActual == null){
+            response.put("mensaje", "Error: no se pudo editar, el registro de salida cpn ID: ".concat(id.toString().concat(" no existe en la base de datos.!")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        
+        try{
+            salidaActual.setEquipo(salida.getEquipo());
+            salidaActual.setFactura(salida.getFactura());
+            
+            salidaUpdate = salidasService.save(salidaActual);
+        }catch(DataAccessException e){
+            response.put("mensaje", "Error al actualizar el registro de salida en la base de datos.!");
+            response.put("error", e.getMessage().concat(": ".concat(e.getMostSpecificCause().getMessage())));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+        response.put("mensaje", "El registro de salida se ah actualizado con exito.!");
+        response.put("salida", salidaUpdate);
+                
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+    
+    @DeleteMapping("/salidas/{id}")
+    public ResponseEntity<?> eliminarSalida(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        
+        try{
+            salidasService.delete(id);
+        }catch(DataAccessException e){
+            response.put("mensaje", "Error al eliminar el registro de salida de la base de datos.!");        
+            response.put("error", e.getMessage().concat(": ".concat(e.getMostSpecificCause().getMessage())));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+        response.put("mensaje", "El registro ha sido eliminado con exito");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
     
 }
