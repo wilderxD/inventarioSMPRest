@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.grupoUTP.inventarioSMP.repository;
 
-/**
- *
- * @author FUSER011
- */
-public interface IInventarioDAO {
+import com.grupoUTP.inventarioSMP.entity.Inventario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface IInventarioDAO extends JpaRepository<Inventario, Long>{
     
 }

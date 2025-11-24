@@ -44,7 +44,7 @@ public class EquipoServiceImpl implements IEquipoService{
 
     @Override
     @Transactional
-    public Equipo save(Equipo equipo) {
+    public Equipo save(Equipo equipo) {      
         return equipoDAO.save(equipo);
     }
 

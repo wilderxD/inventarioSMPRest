@@ -5,7 +5,7 @@ import com.grupoUTP.inventarioSMP.entity.Categoria;
 import com.grupoUTP.inventarioSMP.entity.Equipo;
 import com.grupoUTP.inventarioSMP.entity.Estado;
 import com.grupoUTP.inventarioSMP.entity.Moneda;
-import com.grupoUTP.inventarioSMP.service.EquipoServiceImpl;
+import com.grupoUTP.inventarioSMP.service.IEquipoService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class EquiposController {
     
-    private final EquipoServiceImpl equipoService;
+    private final IEquipoService equipoService;
     
     private final Logger log = LoggerFactory.getLogger(EquiposController.class);
     
