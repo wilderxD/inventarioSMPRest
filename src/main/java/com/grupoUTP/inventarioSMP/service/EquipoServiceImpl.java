@@ -55,26 +55,31 @@ public class EquipoServiceImpl implements IEquipoService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Moneda> findAllMoneda() {
         return equipoDAO.findAllMonedas();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Categoria> findAllCategoria() {
         return categoriaDAO.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Estado> findAllEstado() {
         return equipoDAO.findAllEstados();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Asignado> findAllAsignado() {
         return asignadoDAO.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Oficina> findAllOficina() {
         return equipoDAO.findAllOficinas();
     }

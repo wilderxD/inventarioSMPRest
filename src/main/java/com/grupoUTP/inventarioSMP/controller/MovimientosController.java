@@ -3,6 +3,7 @@ package com.grupoUTP.inventarioSMP.controller;
 import com.grupoUTP.inventarioSMP.entity.Entrada;
 import com.grupoUTP.inventarioSMP.entity.Salida;
 import com.grupoUTP.inventarioSMP.service.IEntradaService;
+import com.grupoUTP.inventarioSMP.service.IInventarioService;
 import com.grupoUTP.inventarioSMP.service.ISalidaService;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,8 @@ public class MovimientosController {
     private final IEntradaService entradaService;
     
     private final ISalidaService salidasService;
+    
+    private final IInventarioService inventarioService;
     
     @GetMapping("/entradas")
     public List<Entrada> mostrarEntradas(){
@@ -86,6 +89,7 @@ public class MovimientosController {
         }    
             try{
                 entradaNew = entradaService.save(entrada);
+                inventarioService.registrarIngreso(entradaNew.getEquipo().getCategoria());
             }catch(DataAccessException e){
                 response.put("mensaje", "Error al realizar el insert en la base de datos.!");
                 response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -142,6 +146,8 @@ public class MovimientosController {
         
         try{
             entradaService.delete(id);
+            Entrada entradaNew = entradaService.findById(id);
+            inventarioService.registrarSalida(entradaNew.getEquipo().getCategoria());
         }catch(DataAccessException e){
             response.put("mensaje", "Error al eliminar el registro de la base de datos.!");
             response.put("error", e.getMessage().concat(": ".concat(e.getMostSpecificCause().getMessage())));
@@ -201,6 +207,7 @@ public class MovimientosController {
         
         try{
             salidaNew = salidasService.save(salida);
+            inventarioService.registrarSalida(salidaNew.getEquipo().getCategoria());
         }catch(DataAccessException e){
             response.put("mensaje", "Error al realizar el registro en la base de datos.!");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -257,6 +264,8 @@ public class MovimientosController {
         
         try{
             salidasService.delete(id);
+            Salida salida = salidasService.findById(id);
+            inventarioService.registrarIngreso(salida.getEquipo().getCategoria());
         }catch(DataAccessException e){
             response.put("mensaje", "Error al eliminar el registro de salida de la base de datos.!");        
             response.put("error", e.getMessage().concat(": ".concat(e.getMostSpecificCause().getMessage())));

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,31 +19,37 @@ public class SalidaServiceImpl implements ISalidaService{
     private final IEquipoDAO equipoDAO;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Salida> findAll() {
         return salidaDAO.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Salida> findAll(Pageable pageable) {
         return salidaDAO.findAll(pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Salida findById(Long id) {
         return salidaDAO.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional
     public Salida save(Salida salida) {
         return salidaDAO.save(salida);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         salidaDAO.deleteById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Equipo> findAllEquipos() {
         return equipoDAO.findAll();
     }
