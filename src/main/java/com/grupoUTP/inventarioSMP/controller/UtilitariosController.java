@@ -234,10 +234,34 @@ public class UtilitariosController {
         }
         
         try{
+            oficinaActual.setDescripcion(oficina.getDescripcion());
             
+            oficinaUpdate = oficinaService.save(oficinaActual);
         }catch(DataAccessException e){
-            
+            response.put("mensaje", "Error al actualizar la oficina en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        
+        response.put("mensaje", "La oficina ha sido creada con exito.!");
+        response.put("oficina", oficinaUpdate);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+    
+    @DeleteMapping("/oficinas/{id}")
+    public ResponseEntity<?> eliminarOficina(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        
+        try{
+            oficinaService.delete(id);
+        }catch(DataAccessException e){
+            response.put("mensaje", "Error al eliminar la oficina de la base de datos.!");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+        response.put("mensaje", "La oficina ha sido eliminada con exito.!");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
      
 }
