@@ -89,7 +89,9 @@ public class EquipoServiceImpl implements IEquipoService{
     @Override
     @Transactional(readOnly = true)
     public void descargarReportes(HttpServletResponse response, String formato) throws IOException{
-        
+        try{
+            
+        }
     }
     
 }
