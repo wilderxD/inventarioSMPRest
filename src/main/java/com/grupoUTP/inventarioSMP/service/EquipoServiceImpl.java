@@ -9,6 +9,8 @@ import com.grupoUTP.inventarioSMP.entity.Oficina;
 import com.grupoUTP.inventarioSMP.repository.IAsignadoDAO;
 import com.grupoUTP.inventarioSMP.repository.ICategoriaDAO;
 import com.grupoUTP.inventarioSMP.repository.IEquipoDAO;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -82,6 +84,12 @@ public class EquipoServiceImpl implements IEquipoService{
     @Transactional(readOnly = true)
     public List<Oficina> findAllOficina() {
         return equipoDAO.findAllOficinas();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public void descargarReportes(HttpServletResponse response, String formato) throws IOException{
+        
     }
     
 }

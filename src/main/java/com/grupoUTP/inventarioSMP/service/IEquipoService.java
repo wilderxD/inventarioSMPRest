@@ -6,6 +6,7 @@ import com.grupoUTP.inventarioSMP.entity.Equipo;
 import com.grupoUTP.inventarioSMP.entity.Estado;
 import com.grupoUTP.inventarioSMP.entity.Moneda;
 import com.grupoUTP.inventarioSMP.entity.Oficina;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,5 +33,7 @@ public interface IEquipoService {
     public List<Asignado> findAllAsignado();
     
     public List<Oficina> findAllOficina();
+    
+    public void descargarReportes(HttpServletResponse response, String formato);
     
 }
