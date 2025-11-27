@@ -7,6 +7,7 @@ import com.grupoUTP.inventarioSMP.entity.Estado;
 import com.grupoUTP.inventarioSMP.entity.Moneda;
 import com.grupoUTP.inventarioSMP.entity.Oficina;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,6 @@ public interface IEquipoService {
     
     public List<Oficina> findAllOficina();
     
-    public void descargarReportes(HttpServletResponse response, String formato);
+    public void descargarReportes(HttpServletResponse response, String formato) throws IOException;
     
 }

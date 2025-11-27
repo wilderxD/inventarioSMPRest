@@ -6,6 +6,11 @@ import com.grupoUTP.inventarioSMP.entity.Equipo;
 import com.grupoUTP.inventarioSMP.entity.Estado;
 import com.grupoUTP.inventarioSMP.entity.Moneda;
 import com.grupoUTP.inventarioSMP.service.IEquipoService;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"http://localhost:4200", "*"})
@@ -180,4 +186,15 @@ public class EquiposController {
         return equipoService.findAllAsignado();
     }
     
+    @GetMapping("/equipos/exportar")
+    public void exportarReporte(HttpServletResponse response, @RequestParam String formato)throws IOException{
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+        
+        String currentDateTime = dateFormatter.format(new Date());
+        
+        String extension = "pdf".equalsIgnoreCase(formato) ? "pdf" : "xlsx";
+        String contentType = "pdf".equalsIgnoreCase(formato) ? "application/pdf" : "application/octet-stream";
+        
+        String headerKey = "Content-"
+    }
 }

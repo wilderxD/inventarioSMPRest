@@ -9,9 +9,12 @@ import com.grupoUTP.inventarioSMP.entity.Oficina;
 import com.grupoUTP.inventarioSMP.repository.IAsignadoDAO;
 import com.grupoUTP.inventarioSMP.repository.ICategoriaDAO;
 import com.grupoUTP.inventarioSMP.repository.IEquipoDAO;
+import com.grupoUTP.inventarioSMP.utilitarios.ReporteExcel;
+import com.grupoUTP.inventarioSMP.utilitarios.ReportePDF;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -89,8 +92,38 @@ public class EquipoServiceImpl implements IEquipoService{
     @Override
     @Transactional(readOnly = true)
     public void descargarReportes(HttpServletResponse response, String formato) throws IOException{
-        try{
-            
+        try(Stream<Equipo> stream = equipoDAO.streamAll()){
+            if("excel".equalsIgnoreCase(formato)){
+                ReporteExcel<Equipo> exportar = new ReporteExcel<>("Equipo");
+                String[] cabeceras = {"ID","Descripcion", "Categoria", "Asignado", "Moneda", "valor", "Estado", "Detalle"};
+                
+                exportar.exportar(response, stream, cabeceras, equipo -> new Object[]{
+                    equipo.getId(),
+                    equipo.getDescripcion(),
+                    equipo.getCategoria().getDescripcion(),
+                    equipo.getAsignado().getDescripcion() == null ? "SIN ASIGNAR" : equipo.getAsignado().getDescripcion(),
+                    equipo.getMoneda().getDescripcion(),
+                    equipo.getValor(),
+                    equipo.getEstado().getDescripcion(),
+                    equipo.getDetalle() == null ? "sin detalles" : equipo.getDetalle()
+                });
+            }else if("pdf".equalsIgnoreCase(formato)){
+                ReportePDF<Equipo> exportar = new ReportePDF<>("Reporte de Equipos");
+                
+                String[] cabeceras = {"ID","Descripcion", "Categoria", "Asignado", "Moneda", "valor", "Estado", "Detalle"};
+                float[] anchos = {1.5f, 4.0f, 4.0f, 4.0f, 2.0f, 2.0f, 2.0f, 5.0f};
+                
+                exportar.exportar(response, stream, cabeceras, anchos, equipo -> new String[]{
+                    String.valueOf(equipo.getId()),
+                    equipo.getDescripcion(),
+                    String.valueOf(equipo.getCategoria().getDescripcion()),
+                    String.valueOf(equipo.getAsignado().getDescripcion() == null ? "SIN ASIGNAR" : equipo.getCategoria().getDescripcion()),
+                    String.valueOf(equipo.getMoneda().getDescripcion()),
+                    String.valueOf(equipo.getValor()),
+                    String.valueOf(equipo.getEstado().getDescripcion()),
+                    equipo.getDetalle()  == null ? "sin detalles" : equipo.getDetalle()
+                });
+            }
         }
     }
     

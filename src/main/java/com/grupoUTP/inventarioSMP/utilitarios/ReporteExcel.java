@@ -38,7 +38,7 @@ public class ReporteExcel<T>{
         }else if(value instanceof Long){
             cell.setCellValue((Long) value);
         }else if(value instanceof Boolean){
-            cell.setCellValue((Boolean) value);
+            cell.setCellValue((String)((Boolean) value ? "Sí" : "No"));
         }else if(value instanceof Double){
             cell.setCellValue((Double) value);
         }else {
