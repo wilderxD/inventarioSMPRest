@@ -101,11 +101,11 @@ public class EquipoServiceImpl implements IEquipoService{
                     equipo.getId(),
                     equipo.getDescripcion(),
                     equipo.getCategoria().getDescripcion(),
-                    equipo.getAsignado().getDescripcion() == null ? "SIN ASIGNAR" : equipo.getAsignado().getDescripcion(),
+                    equipo.getAsignado() != null ? equipo.getAsignado().getDescripcion() : "SIN ASIGNAR",
                     equipo.getMoneda().getDescripcion(),
                     equipo.getValor(),
                     equipo.getEstado().getDescripcion(),
-                    equipo.getDetalle() == null ? "sin detalles" : equipo.getDetalle()
+                    equipo.getDetalle() != null ? equipo.getDetalle() : "sin detalles"
                 });
             }else if("pdf".equalsIgnoreCase(formato)){
                 ReportePDF<Equipo> exportar = new ReportePDF<>("Reporte de Equipos");
@@ -117,7 +117,7 @@ public class EquipoServiceImpl implements IEquipoService{
                     String.valueOf(equipo.getId()),
                     equipo.getDescripcion(),
                     String.valueOf(equipo.getCategoria().getDescripcion()),
-                    String.valueOf(equipo.getAsignado().getDescripcion() == null ? "SIN ASIGNAR" : equipo.getCategoria().getDescripcion()),
+                    String.valueOf(equipo.getAsignado() != null ? equipo.getCategoria().getDescripcion() : "SIN ASIGNAR"),
                     String.valueOf(equipo.getMoneda().getDescripcion()),
                     String.valueOf(equipo.getValor()),
                     String.valueOf(equipo.getEstado().getDescripcion()),

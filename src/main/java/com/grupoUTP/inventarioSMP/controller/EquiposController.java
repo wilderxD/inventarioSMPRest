@@ -195,6 +195,12 @@ public class EquiposController {
         String extension = "pdf".equalsIgnoreCase(formato) ? "pdf" : "xlsx";
         String contentType = "pdf".equalsIgnoreCase(formato) ? "application/pdf" : "application/octet-stream";
         
-        String headerKey = "Content-"
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=Equipos_" + currentDateTime + "." + extension;
+        
+        response.setContentType(contentType);
+        response.setHeader(headerKey,headerValue);
+        
+        equipoService.descargarReportes(response, formato);
     }
 }

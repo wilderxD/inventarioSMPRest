@@ -4,6 +4,8 @@ import com.grupoUTP.inventarioSMP.entity.Entrada;
 import com.grupoUTP.inventarioSMP.entity.Equipo;
 import com.grupoUTP.inventarioSMP.repository.IEntradasDAO;
 import com.grupoUTP.inventarioSMP.repository.IEquipoDAO;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -53,6 +55,11 @@ public class EntradaServiceImpl implements IEntradaService{
     @Transactional(readOnly = true)
     public List<Equipo> findAllEquipos() {
         return equipoDAO.findAll();
+    }
+
+    @Override
+    public void descargarReportes(HttpServletResponse response, String formato) throws IOException {
+        
     }
     
 }
