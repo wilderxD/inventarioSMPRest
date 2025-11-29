@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.grupoUTP.inventarioSMP.service;
 
-/**
- *
- * @author FUSER011
- */
-public class AsignadoServiceImpl {
+
+public class AsignadoServiceImpl extends IAsignadoService{
     
 }
