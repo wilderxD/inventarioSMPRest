@@ -109,12 +109,12 @@ public class InventarioServiceImpl implements IInventarioService{
     @Override
     @Transactional(readOnly = true)
     public void descargarReportes(HttpServletResponse response, String formato) throws IOException {
-        try(Stream<Inventario> stram = inventarioDAO.streamAll()){
+        try(Stream<Inventario> stream = inventarioDAO.streamAll()){
             if("excel".equalsIgnoreCase(formato)){
                 ReporteExcel<Inventario> exportar = new ReporteExcel<>("Inventario");
                 String[] cabeceras = {"ID", "Categoria", "Ingresos", "Salidas", "Stock"};
                 
-                exportar.exportar(response, stram, cabeceras, inventario -> new Object[]{
+                exportar.exportar(response, stream, cabeceras, inventario -> new Object[]{
                     inventario.getId(),
                     inventario.getCategoria() != null ? inventario.getCategoria().getDescripcion() : "Sin Categoria",
                     inventario.getEntradas(),
@@ -127,7 +127,7 @@ public class InventarioServiceImpl implements IInventarioService{
                 String[] cabeceras = {"ID", "Categoria", "Ingresos", "Salidas", "Stock"};
                 float[] anchos = {1.5f, 4.0f, 3.0f, 3.0f, 3.0f};
                 
-                exportar.exportar(response, stram, cabeceras, anchos, inventario -> new String[]{
+                exportar.exportar(response, stream, cabeceras, anchos, inventario -> new String[]{
                     String.valueOf(inventario.getId()),
                     String.valueOf(inventario.getCategoria().getDescripcion()),
                     String.valueOf(inventario.getEntradas()),
