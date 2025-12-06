@@ -52,9 +52,10 @@ public class EquiposController {
     }
     
     @GetMapping("/equipos/page/{page}")
-    public Page<Equipo> index(@PathVariable Integer page){
+    public Page<Equipo> index(@PathVariable Integer page, @RequestParam(required = false) String estado){
         Pageable pageable = PageRequest.of(page, 5);
-        return equipoService.findAll(pageable);
+    // Pasamos el estado al servicio
+    return equipoService.findAll(pageable, estado);
     }
     
     @GetMapping("/equipos/{id}")

@@ -17,7 +17,7 @@ public interface IEquipoService {
     
     public List<Equipo> findAll();
     
-    public Page<Equipo> findAll(Pageable pageable);
+    public Page<Equipo> findAll(Pageable pageable, String estado);
     
     public Equipo findById(Long id);
     

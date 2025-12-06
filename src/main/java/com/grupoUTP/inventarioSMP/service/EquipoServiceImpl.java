@@ -37,8 +37,14 @@ public class EquipoServiceImpl implements IEquipoService{
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Equipo> findAll(Pageable pageable) {
+    public Page<Equipo> findAll(Pageable pageable, String estado) {
+        if (estado != null && !estado.trim().isEmpty() && !estado.equalsIgnoreCase("TODOS")) {
+        // Llama al método filtrado del DAO
+        return equipoDAO.findByEstado_Descripcion(estado, pageable);
+    } else {
+        // Llama al método por defecto
         return equipoDAO.findAll(pageable);
+    }
     }
 
     @Override
